@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class LookWhereGoing : Align
 {
+    public LookWhereGoing(Kinematic parentCharacter)
+    {
+        character = parentCharacter;
+    }
+    
     // override Align's getTargetAngle to look where we're going instead of matching our target's orientation
     public override float getTargetAngle()
     {

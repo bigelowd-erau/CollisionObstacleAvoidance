@@ -6,12 +6,16 @@ public class Wander : SteeringBehavior
 {
     public Kinematic character;
     private Vector3 targetPosition;
-    public GameObject target;
     float maxAcceleration = 1f;
 
     private const float wanderTargetRadius = 2.0f;
     private const float wanderTargetOffset = 3.0f;
     private const float wanderTargetThreshhold = 1.5f;
+
+    public Wander(Kinematic parentCharacter)
+    {
+        character = parentCharacter;
+    }
 
     private void GenerateTargetPosition()
     {
@@ -19,7 +23,6 @@ public class Wander : SteeringBehavior
         targetPosition = new Vector3(Mathf.Cos(randomRotation), 0, Mathf.Sin(randomRotation)) * wanderTargetRadius;
         targetPosition += character.transform.forward * wanderTargetOffset;
         targetPosition = character.transform.position + targetPosition;
-        target.transform.position = targetPosition;
     }
 
     public override SteeringOutput getSteering()

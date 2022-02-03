@@ -13,6 +13,10 @@ public class Kinematic : MonoBehaviour
     public float maxAngularVelocity = 145.0f; // degrees
 
     public GameObject myTarget;
+    //public GameObject character;
+
+    private Vector3 previousLocation;
+    private Vector3 currentLocation;
 
     // child classes will get new steering data for use in our update function
     protected SteeringOutput steeringUpdate;
@@ -21,11 +25,16 @@ public class Kinematic : MonoBehaviour
     void Start()
     {
         steeringUpdate = new SteeringOutput(); // default to nothing. should be overriden by children
+        currentLocation = transform.position;
     }
 
     // Update is called once per frame
     protected virtual void FixedUpdate()
     {
+        //these are used for get velocity calculation
+        previousLocation = currentLocation;
+        currentLocation = transform.position;
+
         // something is breaking my angular velocity
         // check here and reset it if it broke
         if (float.IsNaN(angularVelocity))
@@ -61,6 +70,12 @@ public class Kinematic : MonoBehaviour
         {
             angularVelocity = maxAngularVelocity * (angularVelocity / Mathf.Abs(angularVelocity));
         }
+    }
+
+    public Vector3 GetVelocity()
+    {
+        //Debug.Log("Vel: " + ((currentLocation - previousLocation)/Time.fixedDeltaTime) + " Cur: " + currentLocation + " Pre: " + previousLocation);
+        return (currentLocation - previousLocation)/Time.fixedDeltaTime;
     }
 
 }

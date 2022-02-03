@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wanderer : Kinematic
+public class StraightMover : Kinematic
 {
-    Wander myMoveType;
-    CollisionAvoidance myCollisionAvoidanceType;
+    Straight myMoveType;
+    //CollisionAvoidance myCollisionAvoidanceType;
+    ObstacleAvoidance myObstacleAvoidanceType;
     LookWhereGoing myRotateType;
 
     public bool flee = false;
@@ -13,9 +14,10 @@ public class Wanderer : Kinematic
     // Start is called before the first frame update
     void Start()
     {
-        myMoveType = new Wander(this);
+        myMoveType = new Straight(this);
 
-        myCollisionAvoidanceType = new CollisionAvoidance(this);
+        //myCollisionAvoidanceType = new CollisionAvoidance(this);
+        myObstacleAvoidanceType = new ObstacleAvoidance(this);
 
         myRotateType = new LookWhereGoing(this);
     }
@@ -25,12 +27,14 @@ public class Wanderer : Kinematic
     {
         steeringUpdate = new SteeringOutput();
         //check for collision
-        steeringUpdate = myCollisionAvoidanceType.getSteering();
+        //steeringUpdate = myCollisionAvoidanceType.getSteering();
+        steeringUpdate = myObstacleAvoidanceType.getSteering();
         //if a collision wasnt found wander
         if (steeringUpdate == null)
         {
             steeringUpdate = new SteeringOutput();
             steeringUpdate.linear = myMoveType.getSteering().linear;
+            //Debug.Log("Got stright");
         }
         steeringUpdate.angular = myRotateType.getSteering().angular;
         base.FixedUpdate();
