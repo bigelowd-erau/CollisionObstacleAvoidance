@@ -50,12 +50,6 @@ public class CollisionAvoidance : SteeringBehavior
             curTarget.minSeperation = curTarget.distance - curTarget.relativeSpd * curTarget.timeToCollision;
 
             //if on collision path, and min seperation is smaller than collision radius, and it is the closest collision
-            Debug.Log(character.name);
-            Debug.Log("time to col: " + curTarget.timeToCollision);
-            Debug.Log("minSep: " + curTarget.minSeperation);
-            Debug.Log("shortest Time: " + shortestTime);
-            Debug.Log("dist: " + curTarget.distance);
-
             if (curTarget.timeToCollision > 0 && curTarget.minSeperation < 2 * collisionRadius && curTarget.timeToCollision < shortestTime)
             {
                 shortestTime = curTarget.timeToCollision;
@@ -64,14 +58,12 @@ public class CollisionAvoidance : SteeringBehavior
                 firstTargetToCollide.distance = curTarget.distance;
                 firstTargetToCollide.relativePos = curTarget.relativePos;
                 firstTargetToCollide.relativeVel = curTarget.relativeVel;
-                Debug.Log("Made it to first");
             }
         }
 
         //if target was never assigned
         if (firstTargetToCollide.target == null)
         {
-            Debug.Log("No collision");
             return null;
         }
         

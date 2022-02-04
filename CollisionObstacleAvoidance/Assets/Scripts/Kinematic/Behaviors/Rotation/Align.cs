@@ -8,7 +8,7 @@ public class Align : SteeringBehavior
     public GameObject target;
 
     float maxAngularAcceleration = 100f; // 5
-    float maxRotation = 100f; // maxAngularVelocity
+    float maxRotation = 200f; // maxAngularVelocity
 
     // the radius for arriving at the target
     //float targetRadius = 1f;
